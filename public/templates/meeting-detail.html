@@ -9,6 +9,12 @@
 <div ui-tinymce="tinymceOptions" ng-model="meeting.content" ng-blur="save()"></div>
 
 <h2>Attendees</h2>
+<div class="form" ng-show="usersFiltered().length > 0">
+	<select ng-model="attendee">
+		<option ng-required="" ng-repeat="attendee in usersFiltered()" value="{{ attendee.id }}">{{ attendee.name }}</option>
+	</select>
+	<input class="btn btn-success" value="Add attendee" ng-click="addAttendee()" />
+</div>
 <ul>
 	<li ng-class="attendee.UserMeeting.leader ? 'text-primary' : ''" ng-repeat="attendee in attendees">
 		{{ attendee.name }}<span ng-show="attendee.UserMeeting.leader"> (presenter)</span>

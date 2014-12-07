@@ -6,9 +6,44 @@ angular.module('meetingApp').controller('MeetingDetailCtrl', ['$scope', '$routeP
     	update: {method: 'PUT'}
     });
     var Suggestion = $resource('/api/meetings/:meetingId/suggestion/:suggestionId', {meetingId:'@id'});
+    var Attendee = $resource('/api/meetings/:meetingId/attendee/:userId', {meetingId:'@id', userId: '@userId'}, {
+        update: {method: 'PUT'}
+    });
+    var User = $resource('/api/users/:id');
 
     $scope.tinymceOptions = {
         inline: true
+    };
+
+    User.query(function(users) {
+        $scope.users = users;
+    });
+
+    $scope.usersFiltered = function() {
+        var filtered = [];
+        angular.forEach($scope.users, function(user) {
+            var add = true;
+            angular.forEach($scope.attendees, function(attendee){
+                if (attendee.id == user.id) {
+                    add = false;
+                }
+            });
+
+            if (add) {
+                filtered.push(user);
+            }
+        });
+
+        return filtered;
+    };
+
+    $scope.addAttendee = function() {
+        Attendee.update({
+            id: $scope.meetingId,
+            userId: $scope.attendee
+        }, function() {
+            $scope.reload();
+        });
     };
 
     $scope.save = function() {
