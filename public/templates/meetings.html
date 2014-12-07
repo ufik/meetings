@@ -1,0 +1,26 @@
+<div class="form-inline">
+<input ng-model="topic" class="form-control" placeholder="Topic" />
+<input type="date" ng-model="date" />
+<input type="time" ng-model="time" />
+<input type="submit" class="btn btn-success" ng-click="save()" value="Create new meeting" />
+</form>
+
+<table class="table table-bordered table-hovered">
+	<thead>
+		<tr>
+			<th>Topic</th>
+			<th>Date</th>
+			<th>Presenter</th>
+			<th>Action</th>
+		</tr>
+		<tr ng-repeat="meeting in meetings">
+			<td>{{ meeting.topic }}</td>
+			<td>{{ meeting.date | date : 'd.M.yyyy HH:mm' }}</td>
+			<td>{{ getLeader(meeting).name }}</td>
+			<td>
+				<a href="#/meetings/{{ meeting.id }}">Detail</a>
+				<a href="#/meetings" ng-click="delete(meeting.id)">Delete</a>
+			</td>
+		</tr>
+	</thead>
+</table

@@ -1,0 +1,40 @@
+<a href="#/meetings" class="btn btn-primary">Back to list</a>
+
+<h1>{{ meeting.topic }} on {{ meeting.date | date : 'd.M.yyyy' }} at {{ meeting.date | date : 'HH:mm' }}</h1>
+
+<h2>Purpose of this meeting</h2>
+<div ui-tinymce="tinymceOptions" ng-model="meeting.purpose" ng-blur="save()"></div>
+
+<h2>Content</h2>
+<div ui-tinymce="tinymceOptions" ng-model="meeting.content" ng-blur="save()"></div>
+
+<h2>Attendees</h2>
+<ul>
+	<li ng-class="attendee.UserMeeting.leader ? 'text-primary' : ''" ng-repeat="attendee in attendees">
+		{{ attendee.name }}<span ng-show="attendee.UserMeeting.leader"> (presenter)</span>
+	</li>
+</ul>
+
+<h2>Suggestions</h2>
+<div class="form">
+	<input class="form-control" ng-model="suggestion" />
+	<select ng-model="user">
+		<option ng-required="" ng-repeat="attendee in attendees" value="{{ attendee.id }}">{{ attendee.name }}</option>
+	</select>
+	<input class="btn btn-success" value="Add new suggestion" type="submit" ng-click="saveSuggestion()" />
+</div>
+
+<table class="table table-hovered table-bordered">
+	<thead>
+		<tr>
+			<td>Attendee</td>
+			<td>Suggestion</td>			
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="suggestion in suggestions">
+			<td>{{ suggestion.user.name }}</td>
+			<td>{{ suggestion.content }}</td>
+		</tr>
+	</tbody>
+</table>
