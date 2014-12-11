@@ -1,7 +1,7 @@
 {
   "name": "DevMeetings",
   "main": "index.js",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "authors": [
     "Tomas Voslar <tomas.voslar@webcook.cz>"
   ],
@@ -23,6 +23,6 @@
     "angular": "1.2.*",
     "angular-route": "1.2.*",
     "angular-resource": "1.2.*",
-    "angular-ui-tinymce": "latest"
+    "textAngular": "~1.2.2"
   }
 }

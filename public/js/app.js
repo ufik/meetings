@@ -3,7 +3,7 @@
 var meetingApp = angular.module('meetingApp', [
 	'ngRoute',
 	'ngResource',
-	'ui.tinymce'
+	'textAngular'
 ]);
 
 angular.module('meetingApp').config(['$routeProvider',

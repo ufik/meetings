@@ -3,10 +3,10 @@
 <h1>{{ meeting.topic }} on {{ meeting.date | date : 'd.M.yyyy' }} at {{ meeting.date | date : 'HH:mm' }}</h1>
 
 <h2>Purpose of this meeting</h2>
-<div ui-tinymce="tinymceOptions" ng-model="meeting.purpose" ng-blur="save()"></div>
+<div text-angular ng-model="meeting.purpose" ng-blur="save()"></div>
 
 <h2>Content</h2>
-<div ui-tinymce="tinymceOptions" ng-model="meeting.content" ng-blur="save()"></div>
+<div text-angular ng-model="meeting.content" ng-blur="save()"></div>
 
 <h2>Attendees</h2>
 <div class="form" ng-show="usersFiltered().length > 0">
@@ -17,7 +17,8 @@
 </div>
 <ul>
 	<li ng-class="attendee.UserMeeting.leader ? 'text-primary' : ''" ng-repeat="attendee in attendees">
-		{{ attendee.name }}<span ng-show="attendee.UserMeeting.leader"> (presenter)</span>
+		<span ng-click="setPresenter(attendee.id, attendee.UserMeeting.leader)">{{ attendee.name }}</span><span ng-show="attendee.UserMeeting.leader"> (presenter)</span>
+		<a class="" ng-click="removeAttendee(attendee.id)">&times;</a>
 	</li>
 </ul>
 
@@ -34,13 +35,15 @@
 	<thead>
 		<tr>
 			<td>Attendee</td>
-			<td>Suggestion</td>			
+			<td>Suggestion</td>
+			<td>Actions</td>			
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="suggestion in suggestions">
 			<td>{{ suggestion.user.name }}</td>
 			<td>{{ suggestion.content }}</td>
+			<td><span class="btn btn-danger" ng-click="removeSuggestion(suggestion.id)">Delete</span></td>
 		</tr>
 	</tbody>
 </table>

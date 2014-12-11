@@ -6,7 +6,7 @@ angular.module('meetingApp').controller('MeetingDetailCtrl', ['$scope', '$routeP
     	update: {method: 'PUT'}
     });
     var Suggestion = $resource('/api/meetings/:meetingId/suggestion/:suggestionId', {meetingId:'@id'});
-    var Attendee = $resource('/api/meetings/:meetingId/attendee/:userId', {meetingId:'@id', userId: '@userId'}, {
+    var Attendee = $resource('/api/meetings/:meetingId/attendee/:userId/:leader', {meetingId:'@id', userId: '@userId'}, {
         update: {method: 'PUT'}
     });
     var User = $resource('/api/users/:id');
@@ -46,6 +46,25 @@ angular.module('meetingApp').controller('MeetingDetailCtrl', ['$scope', '$routeP
         });
     };
 
+    $scope.setPresenter = function(id, leader) {
+        Attendee.update({
+            id: $scope.meetingId,
+            userId: id,
+            leader: !leader
+        }, function() {
+            $scope.reload();
+        });
+    };
+
+    $scope.removeAttendee = function(id) {
+        Attendee.remove({
+            meetingId: $scope.meetingId,
+            userId: id
+        }, function() {
+            $scope.reload();
+        });
+    };
+
     $scope.save = function() {
     	Meeting.update({
     		id: $scope.meetingId,
@@ -55,6 +74,16 @@ angular.module('meetingApp').controller('MeetingDetailCtrl', ['$scope', '$routeP
     	function() {
     		console.log('updated');
     	});
+    };
+
+    $scope.removeSuggestion = function(id) {
+        Suggestion.remove({
+            meetingId: $scope.meetingId,
+            suggestionId: id
+        }, function() {
+            $scope.reload();
+            console.log('Suggestion removed.');
+        });
     };
 
     $scope.reload = function() {
