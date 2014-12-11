@@ -47,7 +47,7 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="suggestion in suggestions">
-			<td>{{ suggestion.user.name }}</td>
+			<td>{{ getUserName(suggestion.UserId) }}</td>
 			<td>{{ suggestion.content }}</td>
 			<td><span class="btn btn-danger" ng-click="removeSuggestion(suggestion.id)">Delete</span></td>
 		</tr>

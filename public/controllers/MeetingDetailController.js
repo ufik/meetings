@@ -25,6 +25,17 @@ angular.module('meetingApp').controller('MeetingDetailCtrl', ['$scope', '$routeP
         $scope.showUserForm = !$scope.showUserForm;
     };
 
+    $scope.getUserName = function(id) {
+        var name = 'unknown';
+        angular.forEach($scope.users, function(item) {
+            if (item.id == id) {
+                name = item.name;
+            }
+        });
+
+        return name;
+    };
+
     $scope.saveUser = function() {
         User.save({
             name: $scope.username
