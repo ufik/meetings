@@ -11,6 +11,8 @@ angular.module('meetingApp').controller('MeetingDetailCtrl', ['$scope', '$routeP
     });
     var User = $resource('/api/users/:id');
 
+    $scope.showUserForm = false;
+
     $scope.tinymceOptions = {
         inline: true
     };
@@ -18,6 +20,19 @@ angular.module('meetingApp').controller('MeetingDetailCtrl', ['$scope', '$routeP
     User.query(function(users) {
         $scope.users = users;
     });
+
+    $scope.toggleUserForm = function() {
+        $scope.showUserForm = !$scope.showUserForm;
+    };
+
+    $scope.saveUser = function() {
+        User.save({
+            name: $scope.username
+        }, function() {
+            $scope.username = '';
+            $scope.reload();
+        });
+    };
 
     $scope.usersFiltered = function() {
         var filtered = [];
@@ -92,6 +107,10 @@ angular.module('meetingApp').controller('MeetingDetailCtrl', ['$scope', '$routeP
 	    	$scope.attendees = data.users;
 	    	$scope.suggestions = data.suggestions;
 	    });
+
+        User.query(function(users) {
+            $scope.users = users;
+        });
     };
 
     $scope.reload();

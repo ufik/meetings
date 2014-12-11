@@ -3,6 +3,7 @@ angular.module('meetingApp').controller('MeetingCtrl', ['$scope', '$routeParams'
     $scope.meetingId = $routeParams.meetingId;
 
     var Meeting = $resource('/api/meetings/:meetingId', {meetingId:'@id'});
+    var User = $resource('/api/users/:id');
 
     $scope.dateOptions = {
         changeYear: true,

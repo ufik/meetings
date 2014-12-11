@@ -8,6 +8,12 @@
 <h2>Content</h2>
 <div text-angular ng-model="meeting.content" ng-blur="save()"></div>
 
+<span class="btn btn-primary" ng-click="toggleUserForm()">Add user</span>
+<div class="form-inline" ng-show="showUserForm">
+	<input type="text" class="form-control" ng-model="username" placeholder="New user name" />
+	<input type="submit" class="btn btn-success" ng-click="saveUser()" value="Create new user" />
+</div>
+
 <h2>Attendees</h2>
 <div class="form" ng-show="usersFiltered().length > 0">
 	<select ng-model="attendee">
